@@ -28,6 +28,47 @@ const getNumberFromString = (numberString: string) => {
   }
 };
 
+const numberStrings = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
+const wordStrings = [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+] as const;
+
+const digitStrings = [...numberStrings, ...wordStrings];
+
+type Digit = (typeof digitStrings)[number];
+
+// Not proud of this but it works
+const getLastDigit = (line: string) => {
+  const map = new Map<Digit, number>();
+
+  for (const digit of digitStrings) {
+    if (line.indexOf(digit) > -1) {
+      map.set(digit, line.lastIndexOf(digit));
+    }
+  }
+
+  const arr = [...map];
+
+  const sortedArr = arr.sort((a, b) => {
+    const [, aValue] = a;
+    const [, bValue] = b;
+
+    return bValue - aValue;
+  });
+
+  const [lastDigitStr] = sortedArr[0];
+
+  return lastDigitStr;
+};
+
 // Get the first digit and last digit per line, if onlye 1 digit, use it for both values
 const calibrationValues = lines.map((line) => {
   // Zero or 0 is not accounted for since it is not stated how to handle it in the problem
@@ -40,20 +81,17 @@ const calibrationValues = lines.map((line) => {
     return 0;
   }
 
-  // Get the first and last items of the matching valid numeric values
-  const tuple = [matches[0], matches[matches.length - 1]];
+  const tuple = [matches[0], getLastDigit(line)];
 
-  const numericStringValues = tuple.map((match) => {
-    let numericString = match;
+  const numericStringValues = tuple.map((value) => {
+    let numericString = value;
 
-    if (Number.isNaN(parseInt(match))) {
-      numericString = getNumberFromString(match);
+    if (Number.isNaN(parseInt(value))) {
+      numericString = getNumberFromString(value);
     }
 
     return numericString;
   });
-
-  // console.log(index + 1, numericStringValues);
 
   const stringValue = numericStringValues[0] + numericStringValues[1];
   const numericValue = parseInt(stringValue);
