@@ -56,20 +56,12 @@ const getLastDigit = (line: string) => {
   }
 
   const arr = [...map];
+  const sortedArr = arr.sort((a, b) => b[1] - a[1]);
 
-  const sortedArr = arr.sort((a, b) => {
-    const [, aValue] = a;
-    const [, bValue] = b;
-
-    return bValue - aValue;
-  });
-
-  const [lastDigitStr] = sortedArr[0];
-
-  return lastDigitStr;
+  return sortedArr[0][0];
 };
 
-// Get the first digit and last digit per line, if onlye 1 digit, use it for both values
+// Get the first digit and last digit per line, if only 1 digit, use it for both values
 const calibrationValues = lines.map((line) => {
   // Zero or 0 is not accounted for since it is not stated how to handle it in the problem
   const regex =
