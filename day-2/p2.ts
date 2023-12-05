@@ -74,13 +74,8 @@ for (const line of lines) {
 
 const gameDataArr = [...gameData];
 
-const minSetGames = gameDataArr.map(([gameNumber, subsets]) => [
-  gameNumber,
-  getMinSetOfCubesPower(subsets),
-]);
+const sum = gameDataArr.reduce((acc, [, subsets]) => {
+  return acc + getMinSetOfCubesPower(subsets);
+}, 0);
 
-const sum = minSetGames.reduce(
-  (acc, [, cubeSetPower]) => acc + cubeSetPower,
-  0,
-);
 console.log(sum);
