@@ -24,11 +24,7 @@ function isGamePossible(subsets: CubeFrequency[][]) {
     for (const cubeFrequency of cubeFrequencies) {
       const [cube, frequency] = cubeFrequency;
 
-      if (
-        (cube === "red" && frequency > config.red) ||
-        (cube === "green" && frequency > config.green) ||
-        (cube === "blue" && frequency > config.blue)
-      ) {
+      if (frequency > config[cube]) {
         isPossible = false;
         break subsetsLoop;
       }
