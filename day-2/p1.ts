@@ -69,9 +69,8 @@ for (const line of lines) {
 
 const gameDataArr = [...gameData];
 
-const possibleGames = gameDataArr.filter(([, subsets]) =>
-  isGamePossible(subsets),
-);
+const sum = gameDataArr
+  .filter(([, subsets]) => isGamePossible(subsets))
+  .reduce((acc, [gameNumber]) => acc + gameNumber, 0);
 
-const sum = possibleGames.reduce((acc, [gameNumber]) => acc + gameNumber, 0);
 console.log(sum);
