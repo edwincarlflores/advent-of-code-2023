@@ -1,9 +1,8 @@
 import { getLines } from "../utils";
 
-const lines = await getLines("./inputs/test.txt");
-// const lines = await getLines("./inputs/input.txt");
+// const lines = await getLines("./inputs/test.txt");
+const lines = await getLines("./inputs/input.txt");
 
-const seedsSet = new Set<number>();
 const seedRanges: number[][] = [];
 const seedsStr = lines.shift();
 
@@ -28,14 +27,6 @@ while (nums.length) {
 }
 
 console.log(seedRanges);
-for (const [start, length] of seedRanges) {
-  for (let idx = 0; idx < length; idx++) {
-    seedsSet.add(start + idx);
-  }
-}
-
-const seeds = Array.from(seedsSet);
-console.log(seeds);
 
 // Retain logic from part 1
 const maps: string[][] = [];
@@ -59,6 +50,16 @@ while (lines.length) {
   maps[mapsIdx].push(line);
 }
 
+function getRange(ranges: number[][]) {
+  const start = Math.min(...ranges.map((r) => r[0]));
+  const end = Math.max(...ranges.map((r) => r[0] + r[1] - 1));
+  return [start, end];
+}
+
+function isSeed(ranges: number[][], num: number) {
+  return ranges.some((r) => r[0] <= num && num < r[0] + r[1]);
+}
+
 function getLocationFromSeed(seed: number) {
   let current = seed;
   for (const map of maps) {
@@ -77,5 +78,19 @@ function getLocationFromSeed(seed: number) {
   return current;
 }
 
-const minLocation = Math.min(...seeds.map((seed) => getLocationFromSeed(seed)));
+const range = getRange(seedRanges);
+console.log("range:", range);
+
+let minLocation = range[1];
+for (let i = range[0]; i < range[1]; i++) {
+  console.log("PROCESSING:", i);
+  if (!isSeed(seedRanges, i)) {
+    continue;
+  }
+
+  const location = getLocationFromSeed(i);
+  if (location < minLocation) {
+    minLocation = location;
+  }
+}
 console.log(minLocation);
