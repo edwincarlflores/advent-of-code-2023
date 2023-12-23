@@ -26,7 +26,7 @@ for (let i = 0; i < times.length; i++) {
 }
 
 for (let i = 0; i < tuples.length; i++) {
-  for (let m = 0; m < tuples[i][0]; m++) {
+  for (let m = 0; m <= tuples[i][0]; m++) {
     const dist = (tuples[i][0] - m) * m;
     if (dist > tuples[i][1]) {
       if (!frequencies[i]) {
