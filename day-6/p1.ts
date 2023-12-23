@@ -3,8 +3,6 @@ import { getLines } from "../utils";
 // const lines = await getLines("./inputs/test.txt");
 const lines = await getLines("./inputs/input.txt");
 
-type TimeDistanceTuple = [number, number];
-const tuples: TimeDistanceTuple[] = [];
 const frequencies: number[] = [];
 
 const times = lines[0]
@@ -22,13 +20,9 @@ const distances = lines[1]
   .map((d) => parseInt(d));
 
 for (let i = 0; i < times.length; i++) {
-  tuples.push([times[i], distances[i]]);
-}
-
-for (let i = 0; i < tuples.length; i++) {
-  for (let m = 0; m <= tuples[i][0]; m++) {
-    const dist = (tuples[i][0] - m) * m;
-    if (dist > tuples[i][1]) {
+  for (let m = 0; m <= times[i]; m++) {
+    const dist = (times[i] - m) * m;
+    if (dist > distances[i]) {
       if (!frequencies[i]) {
         frequencies[i] = 0;
       }
