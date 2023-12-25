@@ -2,31 +2,7 @@ import { getLines } from "../utils";
 
 // const lines = await getLines("./inputs/test.txt");
 const lines = await getLines("./inputs/input.txt");
-
-function getCardValue(card: string) {
-  if (card === "0" || card === "1") {
-    throw new Error("Invalid card number");
-  }
-
-  if (/^[0-9]*$/.test(card)) {
-    return parseInt(card);
-  }
-
-  switch (card) {
-    case "T":
-      return 10;
-    case "J":
-      return 11;
-    case "Q":
-      return 12;
-    case "K":
-      return 13;
-    case "A":
-      return 14;
-    default:
-      throw new Error("Invalid card");
-  }
-}
+const labels = "23456789TJQKA";
 
 function isFiveOfAKind(tuples: [number, number][]) {
   return tuples[0][0] === 5;
@@ -125,8 +101,8 @@ for (const line of lines) {
 function compareHands(handA: string, handB: string) {
   let val = 0;
   for (let i = 0; i < handA.length; i++) {
-    const cardValueA = getCardValue(handA[i]);
-    const cardValueB = getCardValue(handB[i]);
+    const cardValueA = labels.indexOf(handA[i]);
+    const cardValueB = labels.indexOf(handB[i]);
     if (cardValueA === cardValueB) {
       continue;
     }

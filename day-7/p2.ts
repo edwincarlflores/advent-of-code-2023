@@ -4,6 +4,7 @@ import { getLines } from "../utils";
 const lines = await getLines("./inputs/input.txt");
 
 // Main flow start
+const labels = "J23456789TQKA";
 const cardBidMap = new Map<string, number>();
 
 for (const line of lines) {
@@ -33,31 +34,6 @@ const total = sortedMapByHandStrength.reduce(
 console.log(total);
 
 // utility functions
-function getCardValue(card: string) {
-  if (card === "0" || card === "1") {
-    throw new Error("Invalid card number");
-  }
-
-  if (/^[0-9]*$/.test(card)) {
-    return parseInt(card);
-  }
-
-  switch (card) {
-    case "J":
-      return 1;
-    case "T":
-      return 10;
-    case "Q":
-      return 12;
-    case "K":
-      return 13;
-    case "A":
-      return 14;
-    default:
-      throw new Error("Invalid card");
-  }
-}
-
 function isFiveOfAKind(tuples: [number, number][]) {
   return tuples[0][0] === 5;
 }
@@ -176,8 +152,8 @@ function getHandStrength(hand: string) {
 function compareHands(handA: string, handB: string) {
   let val = 0;
   for (let i = 0; i < handA.length; i++) {
-    const cardValueA = getCardValue(handA[i]);
-    const cardValueB = getCardValue(handB[i]);
+    const cardValueA = labels.indexOf(handA[i]);
+    const cardValueB = labels.indexOf(handB[i]);
     if (cardValueA === cardValueB) {
       continue;
     }
