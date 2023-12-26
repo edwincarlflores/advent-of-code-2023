@@ -1,7 +1,7 @@
 import { getLines } from "../utils";
 
-// const lines = await getLines("./inputs/test.txt");
-// const lines = await getLines("./inputs/test2.txt");
+// const lines = await getLines("./inputs/test11.txt");
+// const lines = await getLines("./inputs/test12.txt");
 const lines = await getLines("./inputs/input.txt");
 
 const map: Record<string, [string, string]> = {};
